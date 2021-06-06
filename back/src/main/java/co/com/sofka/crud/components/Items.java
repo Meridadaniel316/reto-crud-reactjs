@@ -3,8 +3,10 @@ package co.com.sofka.crud.components;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="items")
 public class Items {
     @Id
     @GeneratedValue
