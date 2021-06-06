@@ -1,15 +1,15 @@
 package co.com.sofka.crud.tools;
 
-import co.com.sofka.crud.repositories.TodoRepository;
+import co.com.sofka.crud.repositories.RepositoryItems;
 import co.com.sofka.crud.components.Items;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TodoService {
+public class Services {
 
     @Autowired
-    private TodoRepository repository;
+    private RepositoryItems repository;
 
     public Iterable<Items> list(){
         return repository.findAll();

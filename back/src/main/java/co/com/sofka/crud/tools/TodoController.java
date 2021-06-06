@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.*;
 public class TodoController {
 
     @Autowired
-    private TodoService service;
+    private Services service;
 
     @GetMapping(value = "api/todos")
     public Iterable<Items> list(){
         return service.list();
     }
-    
+
     @PostMapping(value = "api/todo")
     public Items save(@RequestBody Items todo){
         return service.save(todo);
