@@ -1,5 +1,7 @@
-package co.com.sofka.crud;
+package co.com.sofka.crud.tools;
 
+import co.com.sofka.crud.repositories.TodoRepository;
+import co.com.sofka.crud.components.Todo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
