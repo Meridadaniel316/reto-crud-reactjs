@@ -1,11 +1,6 @@
-import React, { useContext, useReducer, useEffect, useRef, useState, createContext } from 'react';
+import React, { useContext, useEffect, useRef, useState, createContext } from 'react';
 
 const HOST_API = "http://localhost:8080/api/";
-const initialState = {
-  todo: { elements: [], item: {} },
-  list: { elements: []}
-};
-const Store = createContext(initialState)
 
 
 const Form = () => {
@@ -146,15 +141,6 @@ const List = () => {
       </tbody>
     </table>
   </div>
-}
-
-const StoreProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  return <Store.Provider value={{ state, dispatch }}>
-    {children}
-  </Store.Provider>
-
 }
 
 function App() {
