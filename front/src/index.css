@@ -143,3 +143,15 @@ button[disabled]{
   color: #666666;
   cursor: no-drop;
 }
+
+#logo{
+  background-color: black;
+  margin: right;
+  margin-top: 455px;
+  width: 160px;
+  height: 100px;
+  position: fixed;
+  z-index: 1000px;
+  text-decoration: none;
+  opacity: 95%;
+}
