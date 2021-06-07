@@ -32,7 +32,7 @@ export default () => {
             <input
                 type="text"
                 name="name"
-                placeholder="Lista de TO-DO"
+                placeholder="Agregar un nuevo grupo"
                 onChange={(event) => {
                     setState({ name: event.target.value })
                 }}  ></input>
