@@ -1,8 +1,9 @@
 import React, { useContext, useReducer, useEffect, useRef, useState, createContext } from 'react';
 
-const HOST_API = "http://localhost:8080/api";
+const HOST_API = "http://localhost:8080/api/";
 const initialState = {
-  todo: { list: [], item: {} }
+  todo: { elements: [], item: {} },
+  list: { elements: []}
 };
 const Store = createContext(initialState)
 
@@ -13,17 +14,16 @@ const Form = () => {
   const item = todo.item;
   const [state, setState] = useState(item);
 
-  const onAdd = (event) => {
+  const onAddGroup = (event) => {
     event.preventDefault();
 
     const request = {
       name: state.name,
       id: null,
-      completed: false
     };
 
 
-    fetch(HOST_API + "/todo", {
+    fetch(HOST_API + "/todolist", {
       method: "POST",
       body: JSON.stringify(request),
       headers: {
@@ -73,17 +73,16 @@ const Form = () => {
         setState({ ...state, name: event.target.value })
       }}  ></input>
     {item.id && <button onClick={onEdit}>Actualizar</button>}
-    {!item.id && <button onClick={onAdd}>Crear</button>}
+    {!item.id && <button onClick={onAddGroup}>Crear</button>}
   </form>
 }
 
 
 const List = () => {
-  const { dispatch, state: { todo } } = useContext(Store);
-  const currentList = todo.list;
+  const { state: { list, todo }, dispatch } = useContext(Store);
 
   useEffect(() => {
-    fetch(HOST_API + "/todos")
+    fetch(HOST_API + "todos")
       .then(response => response.json())
       .then((list) => {
         dispatch({ type: "update-list", list })
@@ -135,7 +134,7 @@ const List = () => {
         </tr>
       </thead>
       <tbody>
-        {currentList.map((todo) => {
+        {list.elements.map((element) => {
           return <tr key={todo.id} style={todo.completed ? decorationDone : {}}>
             <td>{todo.id}</td>
             <td>{todo.name}</td>
@@ -161,15 +160,15 @@ function reducer(state, action) {
         }
         return item;
       });
-      todoUpItem.list = listUpdateEdit;
+      todoUpItem.elements = listUpdateEdit;
       todoUpItem.item = {};
       return { ...state, todo: todoUpItem }
     case 'delete-item':
       const todoUpDelete = state.todo;
-      const listUpdate = todoUpDelete.list.filter((item) => {
+      const listUpdate = todoUpDelete.elements.filter((item) => {
         return item.id !== action.id;
       });
-      todoUpDelete.list = listUpdate;
+      todoUpDelete.elements = listUpdate;
       return { ...state, todo: todoUpDelete }
     case 'update-list':
       const todoUpList = state.todo;
@@ -180,9 +179,10 @@ function reducer(state, action) {
       todoUpEdit.item = action.item;
       return { ...state, todo: todoUpEdit }
     case 'add-item':
-      const todoUp = state.todo.list;
-      todoUp.push(action.item);
-      return { ...state, todo: {list: todoUp, item: {}} }
+      const list = state.elements.elements;
+      list.push(action.item);
+      return { ...state, list: { elements: list } };
+
     default:
       return state;
   }
